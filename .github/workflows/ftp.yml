@@ -16,4 +16,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: www/snishiyama/jspsych-tutorial-20210721-28/
           local-dir: ./exp/
-          exclude: '[data/**]'
+          exclude: '[data/**]' # DO NOT USE **/data/**, which will delete data dir on the server dir
