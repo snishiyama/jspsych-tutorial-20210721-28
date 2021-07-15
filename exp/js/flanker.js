@@ -28,25 +28,23 @@ const flanker = (function () {
     trial_duration: 500,
   };
 
-  let _trial = {
-    type: 'html-keyboard-response',
-    stimulus: function () {
-      return `<p style="font-size: ${_font_size}px">${jsPsych.timelineVariable('stim')}</p>`;
-    },
-    choices: ['f', 'j'],
-    data: {
-      condition: jsPsych.timelineVariable('condition'),
-      key: jsPsych.timelineVariable('key'),
-      task: 'flanker',
-    },
-    on_finish: function (data) {
-      data.correct = Number(jsPsych.pluginAPI.compareKeys(data.response, data.key));
-    },
-  };
-
   function _buildBlock(repeat_n, task_nm) {
-    let trial = JSON.parse(JSON.stringify(_trial));
-    trial.data.task = task_nm;
+    let trial = {
+      type: 'html-keyboard-response',
+      stimulus: function () {
+        return `<p style="font-size: ${_font_size}px">${jsPsych.timelineVariable('stim')}</p>`;
+      },
+      choices: ['f', 'j'],
+      data: {
+        condition: jsPsych.timelineVariable('condition'),
+        key: jsPsych.timelineVariable('key'),
+        task: task_nm,
+      },
+      on_finish: function (data) {
+        data.correct = Number(jsPsych.pluginAPI.compareKeys(data.response, data.key));
+      },
+    };
+
     return {
       timeline: [_blank, _fixation, trial],
       timeline_variables: _stims,
