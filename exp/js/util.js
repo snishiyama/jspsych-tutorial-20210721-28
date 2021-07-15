@@ -52,6 +52,7 @@ util.ask = {
     questions: [{ prompt: '年齢を入力してください', columns: 3, required: true, name: 'age' }],
     data: { task: 'par_info' },
     on_finish: function (data) {
+      data.response.age = Math.floor(Math.random() * 12 + 18); // DO NOT USE for actual experiments, only for demos
       util.par_info.age = data.response.age;
     },
   },
@@ -60,6 +61,7 @@ util.ask = {
     questions: [{ prompt: '性別を回答してください', options: ['男性', '女性'], required: true, horizontal: true, name: 'sex' }],
     data: { task: 'par_info' },
     on_finish: function (data) {
+      data.response.sex = Math.random() < 0.5 ? '男性' : '女性'; // DO NOT USE for actual experiments, only for demos
       util.par_info.sex = data.response.sex;
     },
   },
