@@ -16,4 +16,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: www/snishiyama/jspsych-tutorial-20210721-28/
           local-dir: ./exp/
-          exclude: ./exp/data/**
+          exclude: exp/data/**
