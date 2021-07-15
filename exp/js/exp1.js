@@ -1,3 +1,4 @@
+util.expID = 1;
 flanker.repeat_practice = 2;
 flanker.repeat_main = 10;
 
