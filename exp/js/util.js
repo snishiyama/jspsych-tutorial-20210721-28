@@ -66,7 +66,7 @@ util.ask = {
 };
 
 util.inst = (function () {
-  let _getDefault = function (stimulus, prompt = '<p>Press spacebar to continue<p>') {
+  let _getDefault = function (stimulus, prompt = '<p>スペースキーを押すと次に進みます<p>') {
     return {
       type: 'html-keyboard-response',
       stimulus: stimulus,
@@ -78,15 +78,18 @@ util.inst = (function () {
 
   return {
     get opening() {
-      txt = 'これから実験をおこないます。';
+      txt =
+        'これから実験をおこないます。<br>' +
+        '実験の最初に年齢と性別の入力が求められますが，今回はランダムな回答をしてください（ただし，質問紙には真面目に回答してほしいです）。<br>' +
+        '授業でのデモのため，正しい情報を入力した場合，個人の特定が容易です。収集したデータは受講生に共有もするので，一層そのように対応してもらいたいです。';
       let inst_obj = _getDefault(txt);
       return inst_obj;
     },
 
     get finale() {
       let inst_obj = _getDefault(
-        '<p>The experiment is over. Thank you for your participation</p>',
-        'Please wait for 5 seconds. The window reverts to the original size automatically.'
+        '<p>実験はすべて終了しました。ご協力ありがとうございました。</p>',
+        'そのまま待機してください。5秒経過すると自動でウィンドウサイズがもとに戻ります。'
       );
       inst_obj.choices = jsPsych.NO_KEYS;
       inst_obj.trial_duration = 5000;

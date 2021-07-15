@@ -28,6 +28,7 @@ if (Math.random() < 0.5) {
   cb = 2;
 }
 jsPsych.data.addProperties({ CB: cb }); // add identifier of counter balance (CB)
+
 jsPsych.init({
   timeline: exp_timeline,
 });

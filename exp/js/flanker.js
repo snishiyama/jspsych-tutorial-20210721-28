@@ -44,9 +44,11 @@ const flanker = (function () {
     },
   };
 
-  function _buildBlock(repeat_n) {
+  function _buildBlock(repeat_n, task_nm) {
+    let trial = JSON.parse(JSON.stringify(_trial));
+    trial.data.task = task_nm;
     return {
-      timeline: [_blank, _fixation, _trial],
+      timeline: [_blank, _fixation, trial],
       timeline_variables: _stims,
       sample: {
         type: 'fixed-repetitions',
@@ -64,9 +66,9 @@ const flanker = (function () {
       if (typeof param == 'number') _repeat_main = num;
     },
 
-    main: _buildBlock(_repeat_main),
+    main: _buildBlock(_repeat_main, 'flanker_main'),
 
-    practice: _buildBlock(_repeat_practice),
+    practice: _buildBlock(_repeat_practice, 'flanker_practice'),
   };
 })();
 
