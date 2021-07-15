@@ -25,8 +25,8 @@ const BISBAS = (function () {
   ];
 
   let _questions = _items.map(function (item, idx) {
-    return { prompt: item, name: `Q${idx}`, labels: _scale, required: true };
-  });
+    return { prompt: item, name: `Q${idx + 1}`, labels: _scale, required: true };
+  }); // keep question id consistent with Takahashi et al. (2007)
 
   return {
     instruction: {
@@ -46,6 +46,7 @@ const BISBAS = (function () {
       randomize_question_order: true,
       scale_width: 500,
       data: { task: 'bis_bas' },
+      button_label: '次へ',
     },
   };
 })();
