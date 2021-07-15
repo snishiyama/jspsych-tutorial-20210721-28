@@ -14,5 +14,5 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: www/snishiyama/jspsych-tutorial-20210721-28
+          server-dir: www/snishiyama/jspsych-tutorial-20210721-28/
           local-dir: ./exp/
