@@ -99,13 +99,13 @@ flanker.inst = (function () {
 })();
 
 flanker.cursor = {
-  on: {
+  off: {
     type: 'call-function',
     func: function () {
       document.body.style.cursor = 'none';
     },
   },
-  off: {
+  on: {
     type: 'call-function',
     func: function () {
       document.body.style.cursor = 'default';
