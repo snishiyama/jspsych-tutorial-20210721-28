@@ -193,7 +193,7 @@
 
     var questions = [];
     for (var i = 0; i < items.length; i++) {
-      questions.push({ prompt: items[i], name: `Q${i}`, labels: scale, required: true });
+      questions.push({ prompt: items[i], name: `Q${i + 1}`, labels: scale, required: true });
     }
 
     var inst_bis_bas = {
