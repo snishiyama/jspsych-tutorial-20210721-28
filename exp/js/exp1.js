@@ -7,17 +7,10 @@ const get_par_info = {
 };
 
 const flanker_task = {
-  timeline: [flanker.inst.procedure, flanker.practice, flanker.inst.go_main, flanker.main],
+  timeline: [flanker.cursor.off, flanker.inst.procedure, flanker.practice, flanker.inst.go_main, flanker.main, flanker.cursor.on],
 };
 
-var exp_timeline = [
-  util.inst.opening,
-  util.start_fullscreen,
-  get_par_info,
-  util.save_data,
-  util.inst.finale,
-  util.end_fullscreen,
-];
+var exp_timeline = [util.inst.opening, util.start_fullscreen, get_par_info, util.save_data, util.inst.finale, util.end_fullscreen];
 // var exp_timeline = [util.inst.opening, util.start_fullscreen, get_par_info, util.inst.finale, util.end_fullscreen]; // for debug
 var cb; // identifier of counter balance (CB)
 if (Math.random() < 0.5) {

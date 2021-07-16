@@ -118,7 +118,9 @@
 
     var trial_flanker = {
       type: 'html-keyboard-response',
-      stimulus: jsPsych.timelineVariable('stim'),
+      stimulus: function () {
+        return `<p style="font-size: ${font_size}px">${jsPsych.timelineVariable('stim')}</p>`;
+      },
       choices: ['f', 'j'],
       data: {
         condition: jsPsych.timelineVariable('condition'),
@@ -131,7 +133,9 @@
 
     var fixation = {
       type: 'html-keyboard-response',
-      stimulus: '+',
+      stimulus: function () {
+        return `<p style="font-size: ${font_size}px">+</p>`;
+      },
       choices: jsPsych.NO_KEYS,
       trial_duration: 500,
     };
