@@ -65,7 +65,7 @@
       data: { task: 'par_info' },
       on_finish: function (data) {
         data.response.age = Math.floor(Math.random() * 12 + 18); // DO NOT USE for actual experiments, only for demos
-        util.par_info.age = data.response.age;
+        par_info.age = data.response.age;
       },
     };
 
@@ -75,12 +75,12 @@
       data: { task: 'par_info' },
       on_finish: function (data) {
         data.response.sex = Math.random() < 0.5 ? '男性' : '女性'; // DO NOT USE for actual experiments, only for demos
-        util.par_info.sex = data.response.sex;
+        par_info.sex = data.response.sex;
       },
     };
 
     var get_par_info = {
-      timeline: [util.ask.age, util.ask.sex],
+      timeline: [ask_age, ask_sex],
     };
 
     // flanker -----------------------------------------------------------------
@@ -193,12 +193,7 @@
 
     var questions = [];
     for (var i = 0; i < items.length; i++) {
-      questions.push({
-        prompt: items[i],
-        name: `Q${i}`,
-        labels: scale,
-        required: true,
-      });
+      questions.push({ prompt: items[i], name: `Q${i}`, labels: scale, required: true });
     }
 
     var inst_bis_bas = {
