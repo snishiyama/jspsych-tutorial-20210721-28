@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="./js/jspsych-6.3.1/jspsych.js"></script>
+    <script src="./js/jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="./js/jspsych-6.3.1/plugins/jspsych-survey-likert.js"></script>
+    <script src="./js/jspsych-6.3.1/plugins/jspsych-survey-text.js"></script>
+    <script src="./js/jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="./js/jspsych-6.3.1/plugins/jspsych-fullscreen.js"></script>
+    <script src="./js/jspsych-6.3.1/plugins/jspsych-call-function.js"></script>
+    <link rel="stylesheet" href="./js/jspsych-6.3.1/css/jspsych.css" />
+  </head>
+  <body></body>
+  <script type="text/javascript" src="./js/util.js"></script>
+  <script type="text/javascript" src="./js/flanker.js"></script>
+  <script type="text/javascript" src="./js/bis-bas.js"></script>
+  <script type="text/javascript" src="./js/exp1.js"></script>
+  <script>
+    var expID = 1;
+
+    // general instructions ----------------------------------------------------
+    var inst_opening = {
+      type: 'html-keyboard-response',
+      stimulus:
+        'これから実験をおこないます（10分程度）。<br>' +
+        '実験の最初に年齢と性別の入力が求められますが，回答に関係なくランダムなデータが保存されます。<br>' +
+        '授業のデモということで個人の特定可能性が高いことを考慮し，このような措置をとりました。<br>' +
+        'フランカー課題と質問紙はご自身の遂行成績・点数が保存されます。<br>' +
+        '収集したデータは分析のデモに使用します。個人が特定されることはないですし，<br>' +
+        'リアルなデータの方が練習にもなるはずなので，これらの課題は真剣に取り組んでもらえれば幸いです。',
+      prompt: '<p>スペースキーを押すと次に進みます<p>',
+      choices: [' '],
+      data: { task: 'instruction' },
+    };
+
+    var inst_finale = {
+      type: 'html-keyboard-response',
+      stimulus: '<p>実験はすべて終了しました。ご協力ありがとうございました。</p>',
+      prompt: 'そのまま待機してください。5秒経過すると自動でウィンドウサイズがもとに戻ります。',
+      choices: jsPsych.NO_KEYS,
+      data: { task: 'instruction' },
+      trial_duration: 5000,
+    };
+
+    // fullscreen --------------------------------------------------------------
+    var start_fullscreen = {
+      type: 'fullscreen',
+      message: '<p>ウィンドウサイズを最大化します。下のボタンを押してください。</p>',
+      button_label: '次へ',
+      fullscreen_mode: true,
+      data: { task: 'instruction' },
+    };
+
+    var end_fullscreen = {
+      type: 'fullscreen',
+      fullscreen_mode: false,
+      data: { task: 'instruction' },
+    };
+
+    // participant info --------------------------------------------------------
+    var par_info = {
+      tempID: jsPsych.randomization.randomID(12),
+    };
+
+    var ask_age = {
+      type: 'survey-text',
+      questions: [{ prompt: '年齢を入力してください', columns: 3, required: true, name: 'age' }],
+      data: { task: 'par_info' },
+      on_finish: function (data) {
+        data.response.age = Math.floor(Math.random() * 12 + 18); // DO NOT USE for actual experiments, only for demos
+        util.par_info.age = data.response.age;
+      },
+    };
+
+    var ask_sex = {
+      type: 'survey-multi-choice',
+      questions: [{ prompt: '性別を回答してください', options: ['男性', '女性'], required: true, horizontal: true, name: 'sex' }],
+      data: { task: 'par_info' },
+      on_finish: function (data) {
+        data.response.sex = Math.random() < 0.5 ? '男性' : '女性'; // DO NOT USE for actual experiments, only for demos
+        util.par_info.sex = data.response.sex;
+      },
+    };
+
+    var get_par_info = {
+      timeline: [util.ask.age, util.ask.sex],
+    };
+
+    // flanker -----------------------------------------------------------------
+    var repeat_practice = 2;
+    var repeat_main = 10;
+    var font_size = 48;
+
+    var stims_flanker = [
+      { stim: '<<<<<', condition: '一致', key: 'f' },
+      { stim: '>>>>>', condition: '一致', key: 'j' },
+      { stim: '>><>>', condition: '不一致', key: 'f' },
+      { stim: '<<><<', condition: '不一致', key: 'j' },
+      { stim: '--<--', condition: '中性', key: 'f' },
+      { stim: '-->--', condition: '中性', key: 'j' },
+    ];
+
+    var inst_flanker_procedure = {
+      type: 'html-keyboard-response',
+      stimulus:
+        'これから画面上に５つの矢印（>>>>>など）が表示されます。<br>' +
+        '中央の矢印が左向き（<）なら「f」キーを<br>' +
+        '中央の矢印が右向き（>）なら「j」キーを<br>' +
+        'なるべく早く，正確に押してください<br><br>' +
+        '準備ができたら「f」キーか「j」キーを押して課題を開始してください。',
+      choices: ['f', 'j'],
+      data: { task: 'instruction' },
+    };
+
+    var inst_flanker_go_main = {
+      type: 'html-keyboard-response',
+      stimulus: 'それでは本番を行います。<br>準備ができたら「f」キーか「j」キーを押して課題を開始してください。',
+      choices: ['f', 'j'],
+      data: { task: 'instruction' },
+    };
+
+    var trial_flanker = {
+      type: 'html-keyboard-response',
+      stimulus: jsPsych.timelineVariable('stim'),
+      choices: ['f', 'j'],
+      data: {
+        condition: jsPsych.timelineVariable('condition'),
+        key: jsPsych.timelineVariable('key'),
+      },
+      on_finish: function (data) {
+        data.correct = Number(jsPsych.pluginAPI.compareKeys(data.response, data.key));
+      },
+    };
+
+    var fixation = {
+      type: 'html-keyboard-response',
+      stimulus: '+',
+      choices: jsPsych.NO_KEYS,
+      trial_duration: 500,
+    };
+
+    var blank = {
+      type: 'html-keyboard-response',
+      stimulus: '',
+      choices: jsPsych.NO_KEYS,
+      trial_duration: 500,
+    };
+
+    var flanker_practice = {
+      timeline: [blank, fixation, trial_flanker],
+      timeline_variables: stims_flanker,
+      sample: {
+        type: 'fixed-repetitions',
+        size: repeat_practice,
+      },
+    };
+
+    var flanker_main = {
+      timeline: [blank, fixation, trial_flanker],
+      timeline_variables: stims_flanker,
+      sample: {
+        type: 'fixed-repetitions',
+        size: repeat_main,
+      },
+    };
+
+    var flanker_task = {
+      timeline: [inst_flanker_procedure, flanker_practice, inst_flanker_go_main, flanker_main],
+    };
+
+    // BIS-BAS -----------------------------------------------------------------
+    // 日本語版BIS/BAS尺度については次の文献を参照。高橋他 (2007). Grayの気質モデル. パーソナリティ研究, 15(3), 276–289. https://doi.org/10.2132/personality.15.276
+    var scale = ['あてはまらない', 'どちらかと言えばあてはまらない', 'どちらかと言えばあてはまる', 'あてはまる'];
+    var items = [
+      'たとえ何かよくないことが私の身に起ころうとしていても，怖くなったり神経質になったりすることはほとんどない',
+      '私は，欲しいものを手に入れるためには格別に努力する',
+      '何かがうまくいっているときは，それを続けることがとても楽しいと思う',
+      '面白そうだと思えば，私はいつも何か新しいものを試したいと考えている',
+      '私は，欲しいものを手に入れたとき，興奮し，活気づけられる',
+      '非難されたり怒られたりすると，私はかなり傷つく',
+      '欲しいものがあると，私はたいていそれを手に入れるために全力を挙げる',
+      '楽しいかもしれないから，というだけの理由で何かをすることがよくある',
+      '欲しいものを手に入れるチャンスを見つけると，すぐに動き出す',
+      '誰かが私のことを怒っていると考えたり，知ったりすると，私はかなり心配になったり動揺したりする',
+      '何か好きなことをするチャンスをみつけると，私はすぐに興奮する',
+      '私はしばしば時のはずみで行動する',
+      '何かよくないことが起ころうとしていると考えると，私はたいていくよくよ悩む',
+      'よいことが私の身に起こると，そのことは，私に強い影響を与える',
+      '何か重要なことをあまりうまくできなかったと考えると不安になる',
+      '私は，興奮や新しい刺激を切望している',
+      '私は，何かを追い求めているときには徹底的にやる',
+      '私は，友達と比べると不安の種はとても少ない',
+      '競争に勝ったら，私は興奮するだろう',
+      '私は，間違いを犯すことを心配している',
+    ];
+
+    var questions = [];
+    for (var i = 0; i < items.length; i++) {
+      questions.push({
+        prompt: items[i],
+        name: `Q${i}`,
+        labels: scale,
+        required: true,
+      });
+    }
+
+    var inst_bis_bas = {
+      type: 'html-keyboard-response',
+      stimulus:
+        '次のページには，ふだんのあなたの様子について尋ねる文章が表示されます。それぞれについて，どの程度あてはまるかを<br>' +
+        '「あてはまらない」「どちらかと言えばあてはまらない」「どちらかと言えばあてはまる」「あてはまる」<br>' +
+        'の4つの選択肢から1つ選んで回答してください。' +
+        '<br><br>準備ができたらスペースキーを押して回答を開始してください。',
+      choices: [' '],
+    };
+
+    var bis_bas = {
+      type: 'survey-likert',
+      questions: questions,
+      randomize_question_order: true,
+      scale_width: 500,
+    };
+
+    // data saving functions ---------------------------------------------------
+    var saveData = function (name, data) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'write_data.php'); // 'write_data.php' is the path to the php file described above.
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({ filename: name, filedata: data }));
+    };
+
+    var save_data = {
+      type: 'call-function',
+      func: function () {
+        jsPsych.data.addProperties(par_info);
+        saveData(`exp${expID}/${par_info.tempID}_flanker-BB_exp${expID}.csv`, jsPsych.data.get().csv());
+      },
+    };
+
+    // implementing experiment -------------------------------------------------
+
+    var exp_timeline = [inst_opening, start_fullscreen, get_par_info, save_data, inst_finale, end_fullscreen];
+    // var exp_timeline = [inst_opening, start_fullscreen, get_par_info, inst_finale, end_fullscreen]; // for debug
+    var cb; // identifier of counter balance (CB)
+    if (Math.random() < 0.5) {
+      exp_timeline.splice(3, 0, flanker_task, inst_bis_bas, bis_bas);
+      cb = 1;
+    } else {
+      exp_timeline.splice(3, 0, inst_bis_bas, bis_bas, flanker_task);
+      cb = 2;
+    }
+    jsPsych.data.addProperties({ CB: cb }); // add identifier of counter balance (CB)
+
+    jsPsych.init({
+      timeline: exp_timeline,
+    });
+  </script>
+</html>
