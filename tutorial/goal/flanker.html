@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="../../jspsych-6.3.1/jspsych.js"></script>
-    <script src="../../jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
-    <link rel="stylesheet" href="../../jspsych-6.3.1/css/jspsych.css" />
+    <meta charset="UTF-8" />
+    <script src="../jspsych-6.3.1/jspsych.js"></script>
+    <script src="../jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
+    <link rel="stylesheet" href="../jspsych-6.3.1/css/jspsych.css" />
   </head>
   <body></body>
   <script>
     var stims_flanker = [
-      {stim: '<<<<<', condition: '一致', key: 'f'},
-      {stim: '>>>>>', condition: '一致', key: 'j'},
-      {stim: '>><>>', condition: '不一致', key: 'f'},
-      {stim: '<<><<', condition: '不一致', key: 'j'},
+      { stim: '<<<<<', condition: '一致', key: 'f' },
+      { stim: '>>>>>', condition: '一致', key: 'j' },
+      { stim: '>><>>', condition: '不一致', key: 'f' },
+      { stim: '<<><<', condition: '不一致', key: 'j' },
     ];
 
     var inst_flanker = {
@@ -31,25 +32,25 @@
       choices: ['f', 'j'],
       data: {
         condition: jsPsych.timelineVariable('condition'),
-        key: jsPsych.timelineVariable('key')
+        key: jsPsych.timelineVariable('key'),
       },
-      on_finish: function(data) {
-        data.correct = Number(jsPsych.pluginAPI.compareKeys(data.response, data.key))
-      }
+      on_finish: function (data) {
+        data.correct = Number(jsPsych.pluginAPI.compareKeys(data.response, data.key));
+      },
     };
 
     var fixation = {
       type: 'html-keyboard-response',
       stimulus: '+',
       choices: jsPsych.NO_KEYS,
-      trial_duration: 500
+      trial_duration: 500,
     };
 
     var blank = {
       type: 'html-keyboard-response',
       stimulus: '',
       choices: jsPsych.NO_KEYS,
-      trial_duration: 500
+      trial_duration: 500,
     };
 
     var flanker_task = {
@@ -58,7 +59,7 @@
       sample: {
         type: 'fixed-repetitions',
         size: 3,
-      }
+      },
     };
 
     jsPsych.init({

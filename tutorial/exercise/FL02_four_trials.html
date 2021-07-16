@@ -8,14 +8,32 @@
   </head>
   <body></body>
   <script>
-    var trial = {
+    var trial1 = {
       type: 'html-keyboard-response',
       stimulus: '<<<<<',
       choices: ['f', 'j'],
     };
 
+    var trial2 = {
+      type: 'html-keyboard-response',
+      stimulus: '>>>>>',
+      choices: ['f', 'j'],
+    };
+
+    var trial3 = {
+      type: 'html-keyboard-response',
+      stimulus: '<<><<',
+      choices: ['f', 'j'],
+    };
+
+    var trial4 = {
+      type: 'html-keyboard-response',
+      stimulus: '>><>>',
+      choices: ['f', 'j'],
+    };
+
     jsPsych.init({
-      timeline: [trial],
+      timeline: [trial1, trial2, trial3, trial4],
     });
   </script>
 </html>
