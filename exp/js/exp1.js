@@ -7,14 +7,7 @@ const get_par_info = {
 };
 
 const flanker_task = {
-  timeline: [
-    //flanker.cursor.off,
-    flanker.inst.procedure,
-    flanker.practice,
-    flanker.inst.go_main,
-    flanker.main,
-    //  flanker.cursor.on
-  ],
+  timeline: [flanker.cursor.off, flanker.inst.procedure, flanker.practice, flanker.inst.go_main, flanker.main, flanker.cursor.on],
 };
 
 var exp_timeline = [util.inst.opening, util.start_fullscreen, get_par_info, util.save_data, util.inst.finale, util.end_fullscreen];
