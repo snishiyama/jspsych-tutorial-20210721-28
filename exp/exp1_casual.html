@@ -88,14 +88,21 @@
     var repeat_main = 10;
     var font_size = 48;
 
-    var stims_flanker = [
-      { stim: '<<<<<', condition: '一致', key: 'f' },
-      { stim: '>>>>>', condition: '一致', key: 'j' },
-      { stim: '>><>>', condition: '不一致', key: 'f' },
-      { stim: '<<><<', condition: '不一致', key: 'j' },
-      { stim: '--<--', condition: '中性', key: 'f' },
-      { stim: '-->--', condition: '中性', key: 'j' },
+    var stims_flanker_main = [
+      { stim: '<<<<<', condition: '一致', key: 'f', task: 'flanker_main' },
+      { stim: '>>>>>', condition: '一致', key: 'j', task: 'flanker_main' },
+      { stim: '>><>>', condition: '不一致', key: 'f', task: 'flanker_main' },
+      { stim: '<<><<', condition: '不一致', key: 'j', task: 'flanker_main' },
+      { stim: '--<--', condition: '中性', key: 'f', task: 'flanker_main' },
+      { stim: '-->--', condition: '中性', key: 'j', task: 'flanker_main' },
     ];
+
+    var stims_flanker_practice = [];
+    for (var i = 0; i < stims_flanker_main.length; i++) {
+      var stim_obj = JSON.parse(JSON.stringify(stims_flanker_main)); // deep copy
+      stim_obj.task = 'flanker_practice';
+      stims_flanker_practice.push(stim_obj);
+    }
 
     var inst_flanker_procedure = {
       type: 'html-keyboard-response',
@@ -125,6 +132,7 @@
       data: {
         condition: jsPsych.timelineVariable('condition'),
         key: jsPsych.timelineVariable('key'),
+        task: jsPsych.timelineVariable('task'),
       },
       on_finish: function (data) {
         data.correct = Number(jsPsych.pluginAPI.compareKeys(data.response, data.key));
@@ -222,6 +230,8 @@
         'の4つの選択肢から1つ選んで回答してください。' +
         '<br><br>準備ができたらスペースキーを押して回答を開始してください。',
       choices: [' '],
+      button_label: '次へ',
+      data: { task: 'instruction' },
     };
 
     var bis_bas = {
@@ -229,6 +239,7 @@
       questions: questions,
       randomize_question_order: true,
       scale_width: 500,
+      data: { task: 'bis_bas' },
     };
 
     // data saving functions ---------------------------------------------------
