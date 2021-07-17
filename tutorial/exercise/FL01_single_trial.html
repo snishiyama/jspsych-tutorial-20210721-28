@@ -12,10 +12,11 @@
       type: 'html-keyboard-response',
       stimulus: '>>>>>', // ここを変更する
       choices: ['f', 'j'],
+      post_trial_gap: 500,
     };
 
     jsPsych.init({
-      timeline: [trial],
+      timeline: [trial, trial],
     });
   </script>
 </html>

@@ -21,15 +21,25 @@
       type: 'html-keyboard-response',
       stimulus: jsPsych.timelineVariable('stim'),
       choices: ['f', 'j'],
+      post_trial_gap: 500,
+    };
+
+    var fixation = {
+      type: 'html-keyboard-response',
+      stimulus: '+',
+      choices: jsPsych.NO_KEYS,
+      trial_duration: 500,
     };
 
     var block = {
       timeline: [trial],
+      // timeline: [fixation, trial], // 毎試行提示する場合
       timeline_variables: stims_flanker,
     };
 
     jsPsych.init({
       timeline: [block],
+      // timeline: [fixation, block], // 最初だけ提示する場合
     });
   </script>
 </html>
