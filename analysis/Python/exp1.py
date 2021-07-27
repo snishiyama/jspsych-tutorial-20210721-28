@@ -12,7 +12,7 @@ df_e1 = pd.concat([pd.read_csv(f) for f in dir_data_exp1.glob("*.csv")])
 
 # %%
 # demography ----
-df_subj = (
+df_subj_e1 = (
     df_e1
     .loc[:, ["tempID", "age", "sex"]]
     .drop_duplicates()
@@ -20,7 +20,7 @@ df_subj = (
 
 # %%
 # flanker ----
-df_flanker = (
+df_flanker_e1 = (
     df_e1
     .query('task == "flanker_main"')
     .loc[:, ["tempID", "condition", "rt", "correct"]]
@@ -28,7 +28,7 @@ df_flanker = (
 
 # %%
 # BIS/BAS ----
-df_ques = (
+df_ques_e1 = (
     df_e1
     .query('task == "bis_bas"')
     .loc[:, ['tempID', 'response']]
@@ -42,7 +42,7 @@ def json_to_df(tempID, resp):
     return new_df
 
 
-df_bisbas = pd.concat([json_to_df(id, r) for id, r in zip(df_ques['tempID'], df_ques['response'])])
+df_bisbas_e1 = pd.concat([json_to_df(id, r) for _, id, r in df_ques_e1.itertuples()])
 
 # add factor names corresponding to the question number
 dict_items = {'bis': [13, 10, 15, 6, 20, 18, 1],
@@ -55,4 +55,4 @@ for key, val in dict_items.items():
     for v in val:
         dict_q_fct[f'Q{v}'] = key
 
-df_bisbas['fct_nm'] = df_bisbas.index.map(lambda x: dict_q_fct[x])
+df_bisbas_e1['fct_nm'] = df_bisbas_e1.index.map(lambda x: dict_q_fct[x])
