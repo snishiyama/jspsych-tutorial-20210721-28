@@ -59,6 +59,8 @@ df_items_e1 <- list(bis = c(13, 10, 15, 6, 20, 18, 1),
                     seek = c(8, 12, 4, 16)) %>% 
   purrr::map_dfr(~data.frame(q_id = .x), .id = "fct_nm")
 
+items_rev <- c(1, 18) # ids of reversed items
+
 df_bisbas_e1 <- df_e1 %>% 
   dplyr::filter(task == 'bis_bas') %>% 
   dplyr::select(tempID, response) %>%
@@ -68,7 +70,9 @@ df_bisbas_e1 <- df_e1 %>%
                       names_to = 'q_id', 
                       names_pattern = "Q([0-9]+)",
                       names_transform = list(q_id = as.numeric)) %>% 
-  dplyr::left_join(df_items_e1, by = "q_id") 
+  dplyr::left_join(df_items_e1, by = "q_id") %>% 
+  dplyr::mutate(value = value + 1, # convert 0 ~ 3 (default scoring by jsPsych) to 1 ~ 4
+                value = if_else(q_id %in% items_rev, 5 - value, value)) # deal with reversed items
 
 # analyze the data as you like
 df_bisbas_e1 %>% 
