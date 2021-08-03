@@ -2,7 +2,7 @@
 
 本チュートリアルは 2021/07/21, 28 に京都大学教育学研究科の「心理データ解析演習」の授業内で実施されたものです。
 
-**チュートリアルのフォルダは [ここから](https://github.com/snishiyama/jspsych-tutorial-20210721-28/zipball/main) をダウンロードしてください。**
+**チュートリアルのフォルダは [ここからダウンロード](https://github.com/snishiyama/jspsych-tutorial-20210721-28/zipball/main) してください。**
 もちろん，`git clone` も可能なので，git になじみのある方は [Github レポジトリ](https://github.com/snishiyama/jspsych-tutorial-20210721-28) から git の URL を取得してください。
 
 チュートリアルの目的は以下の 2 つです。
