@@ -26,7 +26,7 @@ jsPsych は，心理学実験作成・実施のための JavaScript ライブラ
 jsPsych のベースとなっている JavaScript は，Web ページを動的に制御するためのプログラミング言語です。
 映画のサイトで背景画像が切り替わったり，検索窓に文字を入力すると候補が表示されたりするのは JavaScript によって実現されています。
 
-![879733901eae34c0d16179b5a2a44fd0.png](:/50d1f05b3e93483fa198f18f3d191dd8)
+![JavaScriptのイメージ](js-concept.png)
 
 ### jsPsych を用いた心理学実験とは
 
