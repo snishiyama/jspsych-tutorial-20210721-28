@@ -1,4 +1,4 @@
-remote_theme: jekyll/minima
+remote_theme: tomjoht/documentation-theme-jekyll
 exlude:
   - analysis/
   - docs/
