@@ -1,4 +1,4 @@
-theme: jekyll-theme-hacker
+theme: tomjoht/documentation-theme-jekyll
 exlude:
   - analysis/
   - docs/
