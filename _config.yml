@@ -1,1 +1,8 @@
 theme: jekyll-theme-hacker
+exlude:
+  - analysis/
+  - docs/
+  - exp/
+  - tutorial/analysis/
+  - LICENSE
+  - jspsych-tutorial-20210721-28.Rproj
