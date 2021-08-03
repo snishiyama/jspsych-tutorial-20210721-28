@@ -1,6 +1,6 @@
 # 今回使用するライブラリ（R）・パッケージ（Py）
 
-### R
+## R
 
 ```r
 if(!require(pacman)) install.packages("pacman")
@@ -17,7 +17,7 @@ pacman::p_load(tidyverse, here, jsonlite)
 - `here`: `.Rproj` ファイルを起点にパスを指定できるようにする
 - `jsonlite`: json 形式のデータ（`survey-likert`が吐き出すデータ）を扱いやすくする。
 
-### Python
+## Python
 
 ```python
 import pathlib
